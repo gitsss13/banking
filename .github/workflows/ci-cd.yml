@@ -35,7 +35,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: ${{ secrets.spidermannn }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Set unique image tag
@@ -48,7 +48,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/banking-app:${{ steps.image.outputs.tag }}
+            ${{ secrets.spidermannn }}/banking-app:${{ steps.image.outputs.tag }}
 
   deploy:
     needs: build_and_push
@@ -70,5 +70,5 @@ jobs:
         env:
           IMAGE_TAG: push-${{ github.run_number }}-${{ github.sha }}
         run: |
-          kubectl set image deployment/banking-app banking-app=${{ secrets.DOCKERHUB_USERNAME }}/banking-app:${IMAGE_TAG}
+          kubectl set image deployment/banking-app banking-app=${{ secrets.spidermannn }}/banking-app:${IMAGE_TAG}
           kubectl rollout status deployment/banking-app --timeout=180s
